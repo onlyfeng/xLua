@@ -33,8 +33,69 @@ find_path(XLUA_PROJECT_DIR NAMES SConstruct
 
 MARK_AS_ADVANCED(XLUA_PROJECT_DIR)
 
+#begin pbc
+set (PBC_SRC
+    pbc/src/alloc.c
+    pbc/src/array.c
+    pbc/src/bootstrap.c
+    pbc/src/context.c
+    pbc/src/decode.c
+    pbc/src/map.c
+    pbc/src/pattern.c
+    pbc/src/proto.c
+    pbc/src/register.c
+    pbc/src/rmessage.c
+    pbc/src/stringpool.c
+    pbc/src/varint.c
+    pbc/src/wmessage.c
+    pbc/binding/lua/pbc-lua.c
+)
+set_property(
+    SOURCE ${PBC_SRC}
+    APPEND
+    PROPERTY COMPILE_DEFINITIONS
+    LUA_LIB
+)
+list(APPEND THIRDPART_INC pbc)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${PBC_SRC})
+#end pbc
+
+#begin lua-cjson
+set (CJSON_SRC
+    lua-cjson/fpconv.c
+    lua-cjson/strbuf.c
+    lua-cjson/lua_cjson.c
+)
+set_property(
+    SOURCE ${CJSON_SRC}
+    APPEND
+    PROPERTY COMPILE_DEFINITIONS
+    LUA_LIB
+)
+list(APPEND THIRDPART_INC lua-cjson)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${CJSON_SRC})
+#end lua-cjson
+
+#begin lpeg
+set (LPEG_SRC
+    lpeg/lpcap.c
+    lpeg/lpcode.c
+    lpeg/lpprint.c
+    lpeg/lptree.c
+    lpeg/lpvm.c
+)
+set_property(
+    SOURCE ${LPEG_SRC}
+    APPEND
+    PROPERTY COMPILE_DEFINITIONS
+    LUA_LIB
+)
+list(APPEND THIRDPART_INC lpeg)
+set (THIRDPART_SRC ${THIRDPART_SRC} ${LPEG_SRC})
+#end lpeg
+
 set(LUA_SRC_PATH lua-5.3.5/src)
-set(LUAJIT_SRC_PATH luajit-2.1.0b3/src)
+set(LUAJIT_SRC_PATH luajit2/src)
 
 if (USING_LUAJIT)
 	
