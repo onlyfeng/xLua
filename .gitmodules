@@ -1,0 +1,12 @@
+[submodule "build/lua-cjson"]
+	path = build/lua-cjson
+	url = https://github.com/onlyfeng/lua-cjson.git
+[submodule "build/pbc"]
+	path = build/pbc
+	url = https://github.com/onlyfeng/pbc.git
+[submodule "build/luajit2"]
+	path = build/luajit2
+	url = https://github.com/onlyfeng/luajit2
+[submodule "build/lpeg"]
+	path = build/lpeg
+	url = https://github.com/onlyfeng/lpeg
