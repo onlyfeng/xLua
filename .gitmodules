@@ -10,3 +10,6 @@
 [submodule "build/lpeg"]
 	path = build/lpeg
 	url = https://github.com/onlyfeng/lpeg
+[submodule "build/lua-protobuf"]
+	path = build/lua-protobuf
+	url = https://github.com/onlyfeng/lua-protobuf.git
