@@ -1015,13 +1015,32 @@ namespace CSObjectWrapEditor
 #if !XLUA_GENERAL
         static void clear(string path)
         {
-            if (Directory.Exists(path))
+            try
             {
-                Directory.Delete(path, true);
-                AssetDatabase.DeleteAsset(path.Substring(path.IndexOf("Assets") + "Assets".Length));
-
-                AssetDatabase.Refresh();
+                if (Directory.Exists(path))
+                {
+                    Directory.Delete(path, true);
+                    //AssetDatabase.DeleteAsset(path.Substring(path.IndexOf("Assets") + "Assets".Length));
+                    string metaPath = path;
+                    int metaPathLastIdx = metaPath.Length - 1;
+                    if (metaPath[metaPathLastIdx] == '\\' || metaPath[metaPathLastIdx] == '/')
+                    {
+                        metaPath = metaPath.Substring(0, metaPathLastIdx) + ".meta";
+                    }
+                    else
+                    {
+                        metaPath = metaPath + ".meta";
+                    }
+                    File.Delete(metaPath);
+                }                
             }
+            catch (Exception e)
+            {
+                Debug.LogError("Error: Clear Gen Directory&meta Failed " + e.Message);
+            }
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 #endif
 
