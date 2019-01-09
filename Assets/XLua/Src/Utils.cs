@@ -113,14 +113,14 @@ namespace XLua
 			{
 				try
 				{
-#if UNITY_EDITOR || XLUA_GENERAL
+#if (UNITY_EDITOR || XLUA_GENERAL) && !NET_STANDARD_2_0
 					if (!(assemblies[i].ManifestModule is System.Reflection.Emit.ModuleBuilder))
 					{
 #endif
 						allTypes.AddRange(assemblies[i].GetTypes()
 						.Where(type => exclude_generic_definition ? !type.IsGenericTypeDefinition() : true)
 						);
-#if UNITY_EDITOR || XLUA_GENERAL
+#if (UNITY_EDITOR || XLUA_GENERAL) && !NET_STANDARD_2_0
 					}
 #endif
 				}
@@ -195,7 +195,7 @@ namespace XLua
 						return LuaAPI.luaL_error(L, type.Name + "." + field.Name + " Expected type " + field.FieldType);
 					}
 					field.SetValue(obj, val);
-					if (type.IsValueType)
+					if (type.IsValueType())
 					{
 						translator.Update(L, 1, obj);
 					}
