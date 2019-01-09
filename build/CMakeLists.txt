@@ -48,15 +48,21 @@ set (PBC_SRC
     pbc/src/stringpool.c
     pbc/src/varint.c
     pbc/src/wmessage.c
-    pbc/binding/lua/pbc-lua.c
 )
+
+if (USING_LUAJIT)
+    list(APPEND PBC_SRC pbc pbc/binding/lua/pbc-lua.c)
+else ()
+    list(APPEND PBC_SRC pbc pbc/binding/lua53/pbc-lua53.c)
+endif ()
+
 set_property(
     SOURCE ${PBC_SRC}
     APPEND
     PROPERTY COMPILE_DEFINITIONS
     LUA_LIB
 )
-list(APPEND THIRDPART_INC pbc)
+list(APPEND THIRDPART_INC pbc pbc/src)
 set (THIRDPART_SRC ${THIRDPART_SRC} ${PBC_SRC})
 #end pbc
 
