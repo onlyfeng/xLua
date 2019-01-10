@@ -34,6 +34,9 @@ find_path(XLUA_PROJECT_DIR NAMES SConstruct
 
 MARK_AS_ADVANCED(XLUA_PROJECT_DIR)
 
+set(LUA_SRC_PATH lua-5.3.5/src)
+set(LUAJIT_SRC_PATH luajit2/src)
+
 if (NOT PBC)
     #begin lua-profobuf
     set (LPB_SRC 
@@ -116,9 +119,6 @@ set_property(
 list(APPEND THIRDPART_INC lpeg)
 set (THIRDPART_SRC ${THIRDPART_SRC} ${LPEG_SRC})
 #end lpeg
-
-set(LUA_SRC_PATH lua-5.3.5/src)
-set(LUAJIT_SRC_PATH luajit2/src)
 
 if (USING_LUAJIT)
 	
