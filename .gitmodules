@@ -13,3 +13,9 @@
 [submodule "build/lua-protobuf"]
 	path = build/lua-protobuf
 	url = https://github.com/onlyfeng/lua-protobuf.git
+[submodule "build/lua-rapidjson"]
+	path = build/lua-rapidjson
+	url = https://github.com/onlyfeng/lua-rapidjson.git
+[submodule "build/luaffifb"]
+	path = build/luaffifb
+	url = https://github.com/onlyfeng/luaffifb.git

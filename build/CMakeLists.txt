@@ -25,6 +25,7 @@ option ( USING_LUAJIT "using luajit" OFF )
 option ( GC64 "using gc64" OFF )
 option ( LUAC_COMPATIBLE_FORMAT "compatible format" OFF )
 option ( PBC "using pbc" OFF )
+option ( CJSON "using lua-cjson" OFF )
 
 find_path(XLUA_PROJECT_DIR NAMES SConstruct
     PATHS 
@@ -86,21 +87,39 @@ else()
     #end pbc
 endif ()
 
-#begin lua-cjson
-set (CJSON_SRC
-    lua-cjson/fpconv.c
-    lua-cjson/strbuf.c
-    lua-cjson/lua_cjson.c
-)
-set_property(
-    SOURCE ${CJSON_SRC}
-    APPEND
-    PROPERTY COMPILE_DEFINITIONS
-    LUA_LIB
-)
-list(APPEND THIRDPART_INC lua-cjson)
-set (THIRDPART_SRC ${THIRDPART_SRC} ${CJSON_SRC})
-#end lua-cjson
+if (NOT CJSON)
+    #begin lua-rapidjson
+    set (RAPIDJSON_SRC
+        #lua-rapidjson/src/Document.cpp
+        #lua-rapidjson/src/Schema.cpp
+        lua-rapidjson/src/rapidjson.cpp
+    )
+    set_property(
+        SOURCE ${RAPIDJSON_SRC}
+        APPEND
+        PROPERTY COMPILE_DEFINITIONS
+        LUA_LIB
+    )
+    list(APPEND THIRDPART_INC lua-rapidjson/rapidjson/include)
+    set (THIRDPART_SRC ${THIRDPART_SRC} ${RAPIDJSON_SRC})
+    #end lua-rapidjson
+else()
+    #begin lua-cjson
+    set (CJSON_SRC
+        lua-cjson/fpconv.c
+        lua-cjson/strbuf.c
+        lua-cjson/lua_cjson.c
+    )
+    set_property(
+        SOURCE ${CJSON_SRC}
+        APPEND
+        PROPERTY COMPILE_DEFINITIONS
+        LUA_LIB
+    )
+    list(APPEND THIRDPART_INC lua-cjson)
+    set (THIRDPART_SRC ${THIRDPART_SRC} ${CJSON_SRC})
+    #end lua-cjson
+endif ()
 
 #begin lpeg
 set (LPEG_SRC
@@ -119,6 +138,20 @@ set_property(
 list(APPEND THIRDPART_INC lpeg)
 set (THIRDPART_SRC ${THIRDPART_SRC} ${LPEG_SRC})
 #end lpeg
+
+#begin FFI
+if ((NOT USING_LUAJIT) OR (APPLE AND NOT IOS))
+    set (FFI_SRC luaffifb/parser.c luaffifb/ctype.c luaffifb/ffi.c)
+    set_property(
+        SOURCE ${FFI_SRC}
+        APPEND
+        PROPERTY COMPILE_DEFINITIONS
+        LUA_LIB
+    )
+    list(APPEND THIRDPART_INC luaffifb)
+    set (THIRDPART_SRC ${THIRDPART_SRC} ${FFI_SRC})
+endif ()
+#end FFI
 
 if (USING_LUAJIT)
 	
