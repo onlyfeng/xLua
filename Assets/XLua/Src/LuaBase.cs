@@ -23,8 +23,8 @@ namespace XLua
     public abstract class LuaBase : IDisposable
     {
         protected bool disposed;
-        protected readonly int luaReference;
-        protected readonly LuaEnv luaEnv;
+        protected int luaReference;
+        protected LuaEnv luaEnv;
 
 #if UNITY_EDITOR || XLUA_GENERAL
         protected int _errorFuncRef { get { return luaEnv.errorFuncRef; } }
@@ -72,6 +72,7 @@ namespace XLua
                     }
 #endif
                 }
+                luaEnv = null;
                 disposed = true;
             }
         }

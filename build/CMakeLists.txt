@@ -155,7 +155,7 @@ endif ()
 
 if (USING_LUAJIT)
 	
-    if (APPLE AND NOT IOS AND NOT ANDROID)
+    if (APPLE AND NOT IOS)
 	    include_directories(
 		  ${CMAKE_SOURCE_DIR}
 		  lua-5.1.5/src
@@ -223,6 +223,7 @@ endif ( )
 
 set ( XLUA_CORE
     i64lib.c
+    perflib.c
     xlua.c
 )
 
@@ -262,7 +263,7 @@ if (APPLE)
            ${XLUA_CORE}
            ${THIRDPART_SRC}
         )
-		set_xcode_property (xlua IPHONEOS_DEPLOYMENT_TARGET "7.0" "all")
+		set_xcode_property (xlua IPHONEOS_DEPLOYMENT_TARGET "7.0")
     else ()
         set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_64_BIT)")
         add_library(xlua MODULE

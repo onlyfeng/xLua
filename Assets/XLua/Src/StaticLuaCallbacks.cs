@@ -164,10 +164,7 @@ namespace XLua
                 if (udata != -1)
                 {
                     ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-                    if ( translator != null )
-                    {
-                        translator.collectObject(udata);
-                    }
+                    translator.collectObject(udata);
                 }
                 return 0;
             }
