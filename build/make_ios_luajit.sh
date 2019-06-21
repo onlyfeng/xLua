@@ -21,9 +21,9 @@ fi
 
 cd luajit2
 
-XCODEVER=`xcodebuild -version|head -n 1|sed 's/Xcode \([0-9]*\)/\1/g'`
+XCODEVER=`xcodebuild -version|head -n 1|sed 's/Xcode \([0-9]*\).*/\1/g'`
 
-if [ $XCODEVER -lt 10]
+if [ $XCODEVER -lt 10 ]
 then
     make clean
     ISDKF="-arch armv7 -isysroot $ISDK/SDKs/$ISDKVER -miphoneos-version-min=7.0"
@@ -44,7 +44,7 @@ lipo libxluav7.a -create libxluav7s.a libxlua64.a -output libluajit.a
 cd ../..
 
 mkdir -p build_lj_ios && cd build_lj_ios
-cmake -DUSING_LUAJIT=ON  -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake -DPLATFORM=OS64  -GXcode ../
+cmake -DUSING_LUAJIT=ON  -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake -GXcode ../
 cd ..
 cmake --build build_lj_ios --config Release
 
