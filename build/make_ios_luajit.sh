@@ -7,6 +7,8 @@ ISDK=$IXCODE/Platforms/iPhoneOS.platform/Developer
 ISDKVER=iPhoneOS.sdk
 ISDKP=$IXCODE/usr/bin/
 
+export MACOSX_DEPLOYMENT_TARGET='10.4'
+
 if [ ! -e $ISDKP/ar ]; then 
   sudo cp /usr/bin/ar $ISDKP
 fi
@@ -21,9 +23,9 @@ fi
 
 cd luajit2
 
-XCODEVER=`xcodebuild -version|head -n 1|sed 's/Xcode \([0-9]*\)/\1/g'`
+XCODEVER=`xcodebuild -version|head -n 1|sed 's/Xcode \([0-9]*\).*/\1/g'`
 ISOLD_XCODEVER=`echo "$XCODEVER < 10" | bc`
-if [ ISOLD_XCODEVER == 1 ]
+if [ $ISOLD_XCODEVER -eq 1 ]
 then
     make clean
     ISDKF="-arch armv7 -isysroot $ISDK/SDKs/$ISDKVER -miphoneos-version-min=7.0"
@@ -39,8 +41,9 @@ make clean
 ISDKF="-arch arm64 -isysroot $ISDK/SDKs/$ISDKVER -miphoneos-version-min=7.0"
 make HOST_CC="gcc -std=c99" TARGET_FLAGS="$ISDKF" TARGET=arm64 TARGET_SYS=iOS LUAJIT_A=libxlua64.a
 
+
 cd src
-if [ ISOLD_XCODEVER == 1 ]
+if [ $ISOLD_XCODEVER -eq 1 ]
 then
     lipo libxluav7.a -create libxluav7s.a libxlua64.a -output libluajit.a
 else
