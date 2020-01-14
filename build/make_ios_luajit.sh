@@ -19,7 +19,7 @@ if [ ! -e $ISDKP/strip ]; then
   sudo cp /usr/bin/strip $ISDKP
 fi
 
-cd luajit-2.1.0b3
+cd luajit2
 
 XCODEVER=`xcodebuild -version|head -n 1|sed 's/Xcode \([0-9]*\)/\1/g'`
 ISOLD_XCODEVER=`echo "$XCODEVER < 10" | bc`
@@ -54,4 +54,4 @@ cd ..
 cmake --build build_lj_ios --config Release
 
 mkdir -p plugin_luajit/Plugins/iOS/
-libtool -static -o plugin_luajit/Plugins/iOS/libxlua.a build_lj_ios/Release-iphoneos/libxlua.a luajit-2.1.0b3/src/libluajit.a
+libtool -static -o plugin_luajit/Plugins/iOS/libxlua.a build_lj_ios/Release-iphoneos/libxlua.a luajit2/src/libluajit.a
