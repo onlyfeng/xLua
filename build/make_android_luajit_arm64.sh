@@ -3,7 +3,8 @@ if [ -z "$ANDROID_NDK" ]; then
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-SRCDIR=$DIR/luajit-2.1.0b3
+#SRCDIR=$DIR/luajit-2.1.0b3
+SRCDIR=$DIR/luajit2
 # ANDROID_NDK=~/android-ndk-r10e
 
 OS=`uname -s`
@@ -26,7 +27,8 @@ make HOST_CC="gcc -m64" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF $NDKARC
 
 cd "$DIR"
 mkdir -p build_lj_v8a && cd build_lj_v8a
-cmake -DUSING_LUAJIT=ON -DANDROID_ABI=arm64-v8a -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-clang -DANDROID_NATIVE_API_LEVEL=android-21 ../
+#cmake -DUSING_LUAJIT=ON -DANDROID_ABI=arm64-v8a -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-clang -DANDROID_NATIVE_API_LEVEL=android-21 ../
+cmake -DUSING_LUAJIT=ON -DGC64=ON -DANDROID_ABI=arm64-v8a -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-clang -DANDROID_NATIVE_API_LEVEL=android-21 ../
 cd "$DIR"
 cmake --build build_lj_v8a --config Release
 mkdir -p plugin_luajit/Plugins/Android/libs/arm64-v8a/
