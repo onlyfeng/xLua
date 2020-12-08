@@ -3,7 +3,7 @@
 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
 
 echo Swtich to x86 build env
-cd %~dp0\luajit2\src
+cd %~dp0\..\luajit2\src
 call msvcbuild.bat static
 cd ..\..
 
