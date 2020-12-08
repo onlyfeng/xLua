@@ -164,6 +164,33 @@ jobs:
         with:
           path: ./build/plugin_luajit/**/*
           name: plugin_luajit
+
+  windows-luabin:
+    runs-on: windows-2016
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+      
+      - name: Insatll MSVC
+        uses: microsoft/setup-msbuild@v1.0.2
+      
+      - name: Build
+        run: |
+          cd build\luac
+          .\make_win_lua54.bat
+          .\make_win_lua53.bat
+      - name: UploadLuabin54
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./build/luac/bin_lua54/**/*
+          name: bin_lua54
+      - name: UploadLuabin53
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./build/luac/bin_lua53/**/*
+          name: bin_lua53
           
   windows-luajit-32:
     runs-on: windows-2016
