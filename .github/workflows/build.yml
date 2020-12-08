@@ -164,7 +164,31 @@ jobs:
         with:
           path: ./build/plugin_luajit/**/*
           name: plugin_luajit
+          
+  windows-luajit-32:
+    runs-on: windows-2016
 
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+      
+      - name: Insatll MSVC
+        uses: microsoft/setup-msbuild@v1.0.2
+      
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86
+      - name: Build Luajit
+        run: |
+          cd build
+          .\make_win32_luajit.bat  
+      - name: UploadJit
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./build/plugin_luajit/**/*
+          name: plugin_luajit
+    
   windows-luabin:
     runs-on: windows-2016
 
@@ -191,8 +215,28 @@ jobs:
         with:
           path: ./build/luac/bin_lua53/**/*
           name: bin_lua53
-          
-  windows-luajit-32:
+  windows-luabin-luajit-64:
+    runs-on: windows-2016
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+      
+      - name: Insatll MSVC
+        uses: microsoft/setup-msbuild@v1.0.2
+      
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Build Luajit
+        run: |
+          cd build\luac
+          .\make_win64_luajit.bat 
+      - name: UploadJit
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./build/luac/bin_luajit/**/*
+          name: bin_luajit
+  windows-luabin-luajit-32:
     runs-on: windows-2016
 
     steps:
@@ -208,13 +252,10 @@ jobs:
           arch: x86
       - name: Build Luajit
         run: |
-          cd build
+          cd build\luac
           .\make_win32_luajit.bat  
       - name: UploadJit
         uses: actions/upload-artifact@v2
         with:
-          path: ./build/plugin_luajit/**/*
-          name: plugin_luajit
-    
-
-   
+          path: ./build/luac/bin_luajit/**/*
+          name: bin_luajit
