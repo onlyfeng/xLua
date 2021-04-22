@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       - name: Install NDK
         run: |
           cd ~
@@ -45,6 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       - name: Build
         run: |
           cd build
@@ -71,6 +75,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       - name: Build
         run: |
           cd build
@@ -97,6 +103,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       - name: Build
         run: |
           cd build
@@ -123,6 +131,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       
       - name: Insatll MSVC
         uses: microsoft/setup-msbuild@v1.0.2
@@ -139,7 +149,7 @@ jobs:
       - name: Build Luajit
         run: |
           cd build
-          .\make_win64_luajit.bat
+          .\make_win64_luajit_gc64.bat
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
@@ -161,6 +171,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
       
       - name: Insatll MSVC
         uses: microsoft/setup-msbuild@v1.0.2
