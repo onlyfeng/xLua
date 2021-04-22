@@ -300,9 +300,9 @@ jobs:
           cd plugin_luajit/ && tar cvfz ../luajit_${{ github.event.inputs.tag_name }}.tgz Plugins && cd -
           cd plugin_lua53/ && tar cvfz ../lua53_${{ github.event.inputs.tag_name }}.tgz Plugins && cd -
           cd plugin_lua54/ && tar cvfz ../lua54_${{ github.event.inputs.tag_name }}.tgz Plugins && cd -
-          cd bin_luajit/ && tar cvfz ../bin_luajit_${{ github.event.inputs.tag_name }}.tgz Bins && cd -
-          cd bin_lua53/ && tar cvfz ../bin_lua53_${{ github.event.inputs.tag_name }}.tgz Bins && cd -
-          cd bin_lua54/ && tar cvfz ../bin_lua54_${{ github.event.inputs.tag_name }}.tgz Bins && cd -
+          tar cvfz bin_luajit_${{ github.event.inputs.tag_name }}.tgz bin_luajit
+          tar cvfz bin_lua53_${{ github.event.inputs.tag_name }}.tgz bin_lua53
+          tar cvfz bin_lua54_${{ github.event.inputs.tag_name }}.tgz bin_lua54
           
       - name: Create Release
         id: create_release
@@ -348,7 +348,7 @@ jobs:
           asset_name: lua54_${{ github.event.inputs.tag_name }}.tgz
           asset_content_type: application/tgz
 
-      - name: Upload luajit Bins
+      - name: Upload luajit bin_luajit
         #id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
@@ -359,7 +359,7 @@ jobs:
           asset_name: bin_luajit_${{ github.event.inputs.tag_name }}.tgz
           asset_content_type: application/tgz
           
-      - name: Upload lua53 Bins
+      - name: Upload lua53 bin_lua53
         #id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
@@ -370,7 +370,7 @@ jobs:
           asset_name: bin_lua53_${{ github.event.inputs.tag_name }}.tgz
           asset_content_type: application/tgz
           
-      - name: Upload lua54 Bins
+      - name: Upload lua54 bin_lua54
         #id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
