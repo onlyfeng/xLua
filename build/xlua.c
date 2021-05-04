@@ -1221,6 +1221,11 @@ LUA_API int css_clone(lua_State *L) {
 	return 1;
 }
 
+LUA_API int lua_release_version(lua_State *L) {
+	lua_pushliteral(L, LUA_RELEASE);
+	return 1;
+}
+
 LUA_API void* xlua_gl(lua_State *L) {
 	return G(L);
 }
@@ -1229,6 +1234,7 @@ static const luaL_Reg xlualib[] = {
 	{"sethook", profiler_set_hook},
 	{"genaccessor", gen_css_access},
 	{"structclone", css_clone},
+	{"luaver", lua_release_version},
 	{NULL, NULL}
 };
 
